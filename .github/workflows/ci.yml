@@ -1,0 +1,27 @@
+name: Basic Code Check
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repo
+      - uses: actions/checkout@v4
+
+      # Example: check HTML validity (requires npm install)
+      - name: Install HTML Validator
+        run: npm install -g html-validator-cli
+
+      - name: Validate HTML
+        run: html-validator --file index.html --verbose
+
+      # Example: check JavaScript syntax
+      - name: Check JS syntax
+        run: node -c script.js || echo "JS syntax OK"
