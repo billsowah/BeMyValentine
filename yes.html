@@ -20,6 +20,7 @@ body{
     font-family:Arial, sans-serif;
     overflow:hidden;
     position:relative;
+    cursor:pointer; /* shows user can tap */
 }
 
 /* YAAYY Text */
@@ -67,7 +68,7 @@ h1{
 
 <body>
 
-<!-- Music -->
+<!-- 🎵 MUSIC -->
 <audio id="yesMusic" src="WhereHaveYouBeen?.m4a" loop></audio>
 
 <h1>YAAYY! 💕</h1>
@@ -99,12 +100,30 @@ setInterval(() => {
     slide.src = images[index];
 }, 2500);
 
-/* Confetti Generator */
+
+/* 🎵 MUSIC FIX (Tap Anywhere to Play) */
+const music = document.getElementById("yesMusic");
+
+function startMusic(){
+    music.play().catch(err => {
+        console.log("Autoplay blocked:", err);
+    });
+
+    document.removeEventListener("click", startMusic);
+}
+
+// Play on first tap/click
+document.addEventListener("click", startMusic);
+
+
+/* 🎉 Confetti Generator */
 function createConfetti(){
     const confetti = document.createElement("div");
     confetti.classList.add("confetti");
+
     confetti.style.left = Math.random() * window.innerWidth + "px";
     confetti.style.animationDuration = (Math.random() * 3 + 2) + "s";
+
     document.body.appendChild(confetti);
 
     setTimeout(() => {
@@ -113,18 +132,6 @@ function createConfetti(){
 }
 
 setInterval(createConfetti, 200);
-
-/* Play music on page load with autoplay fallback */
-window.onload = function(){
-    const audio = document.getElementById("yesMusic");
-    audio.play().catch(()=>{console.log("Autoplay blocked, click to play.")});
-};
-
-/* Fallback for blocked autoplay: click anywhere to start */
-document.body.addEventListener("click", () => {
-    const audio = document.getElementById("yesMusic.m4a");
-    if(audio.paused) audio.play();
-}, {once:true});
 
 </script>
 
