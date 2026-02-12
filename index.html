@@ -28,8 +28,8 @@ body{
 }
 
 /* Card */
+/* Card with animated gradient */
 .container{
-    background:hotpink;
     width:360px;
     padding:35px 20px;
     border-radius:20px;
@@ -37,12 +37,14 @@ body{
     border:4px solid red;
     position:relative;
     z-index:5;
-    animation:cardEnter 1.2s ease-out;
+    animation:cardEnter 1.2s ease-out, cardGradient 10s ease infinite;
+    background: linear-gradient(45deg, #ff5f6d, #ffc371, #ff9a9e, #f6d365);
+    background-size: 400% 400%;
 }
-
-@keyframes cardEnter{
-    from{transform:translateY(60px) scale(0.8); opacity:0;}
-    to{transform:translateY(0) scale(1); opacity:1;}
+@keyframes cardGradient{
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
 }
 
 /* Cat Emoji */
