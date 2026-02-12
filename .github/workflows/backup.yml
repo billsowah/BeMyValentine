@@ -1,0 +1,41 @@
+name: Scheduled Backup
+
+# Run every day at midnight (UTC)
+on:
+  schedule:
+    - cron: '0 0 * * *'  # daily at 00:00 UTC
+  workflow_dispatch:     # allows manual trigger
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the repo
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Step 2: Create backup folder
+      - name: Create backup folder
+        run: mkdir -p backups
+
+      # Step 3: Copy site files to backup folder
+      - name: Copy site files
+        run: |
+          cp -r index.html backups/
+          cp -r style.css backups/
+          cp -r script.js backups/
+
+      # Step 4: Commit backup changes
+      - name: Commit backups
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "actions@github.com"
+          git add backups/*
+          git commit -m "Automatic daily backup [skip ci]" || echo "No changes to commit"
+
+      # Step 5: Push backup
+      - name: Push backup
+        uses: ad-m/github-push-action@v0.6.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
