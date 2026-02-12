@@ -205,8 +205,9 @@ button{
 <body>
 
 <!-- Audio -->
-<audio id="index.html" src="MaCherie.m4a" loop></audio>
-
+<audio id="Be My Valentine" src="MaCherie.m4a" loop></audio>
+<audio id="confettiSound" src="confetti-sound.mp3"></audio>
+    
 <div class="container">
     <div class="cat">🐱❤️</div>
     <h2>
@@ -221,13 +222,13 @@ button{
 <script>
 /* Play music on load */
 window.onload = function(){
-    const audio = document.getElementById("index.html");
-    audio.play().catch(()=>{console.log("Autoplay")});
+    const audio = document.getElementById("Be My Valentine");
+    audio.play().catch(()=>{console.log("Autoplay blocked.")});
 };
 
 /* Fallback for autoplay */
 document.body.addEventListener("click", () => {
-    const audio = document.getElementById("index.html");
+    const audio = document.getElementById("Be My Valentine");
     if(audio.paused) audio.play();
 }, {once:true});
 
