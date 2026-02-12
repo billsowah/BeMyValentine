@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>YAAYY</title>
+<title>YAAYY 💕</title>
 
 <style>
 
@@ -12,7 +12,7 @@
 body{
     margin:0;
     height:100vh;
-    background:#D8BFD8; /* Lilac background */
+    background:#D8BFD8; /* Lilac */
     display:flex;
     flex-direction:column;
     justify-content:center;
@@ -20,7 +20,7 @@ body{
     font-family:Arial, sans-serif;
     overflow:hidden;
     position:relative;
-    cursor:pointer; /* shows user can tap */
+    cursor:pointer;
 }
 
 /* YAAYY Text */
@@ -29,19 +29,17 @@ h1{
     font-size:50px;
     margin-bottom:20px;
     font-weight:bold;
-    z-index:1;
-    position:relative;
+    z-index:2;
 }
 
-/* Image Area */
+/* Image */
 #slideshow{
     width:250px;
     height:250px;
     border-radius:15px;
     object-fit:cover;
     box-shadow:0 0 15px pink;
-    z-index:1;
-    position:relative;
+    z-index:2;
 }
 
 /* Confetti */
@@ -63,21 +61,65 @@ h1{
     }
 }
 
+/* Tap Message */
+#tapMessage{
+    position:absolute;
+    bottom:40px;
+    font-size:20px;
+    color:hotpink;
+    font-weight:bold;
+    animation:pulse 1.5s infinite;
+    z-index:5;
+    text-align:center;
+}
+
+/* Pulse */
+@keyframes pulse{
+    0%{transform:scale(1);opacity:1;}
+    50%{transform:scale(1.1);opacity:0.6;}
+    100%{transform:scale(1);opacity:1;}
+}
+
+/* Fireworks */
+.firework{
+    position:absolute;
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    pointer-events:none;
+    animation:explode 1.5s ease-out forwards;
+    z-index:10;
+}
+
+@keyframes explode{
+    0%{
+        transform:scale(0);
+        opacity:1;
+    }
+    100%{
+        transform:translate(var(--x), var(--y)) scale(1);
+        opacity:0;
+    }
+}
+
 </style>
 </head>
 
 <body>
 
-<!-- 🎵 MUSIC -->
+<!-- MUSIC -->
 <audio id="yesMusic" src="WHYB.m4a" loop></audio>
 
 <h1>YAAYY! 💕</h1>
 
 <img id="slideshow" src="IMG_3828.jpeg">
 
+<div id="tapMessage">👉 Tap anywhere to start music 💕</div>
+
+
 <script>
 
-/* 🔁 Slideshow Images */
+/* SLIDESHOW */
 const images = [
     "IMG_3838.jpeg",
     "IMG_3837.jpeg",
@@ -101,37 +143,156 @@ setInterval(() => {
 }, 2500);
 
 
-/* 🎵 MUSIC FIX (Tap Anywhere to Play) */
+
+/* MUSIC SYSTEM */
 const music = document.getElementById("yesMusic");
+const tapMsg = document.getElementById("tapMessage");
 
-function startMusic(){
-    music.play().catch(err => {
-        console.log("Autoplay blocked:", err);
-    });
+music.volume = 1;
+music.muted = true;
 
-    document.removeEventListener("click", startMusic);
+let started = false;
+
+function playMusic(){
+
+    if(started) return;
+    started = true;
+
+    music.muted = false;
+    music.play().catch(()=>{});
+
+    tapMsg.style.display = "none";
+
+    document.removeEventListener("click", playMusic);
+    document.removeEventListener("touchstart", playMusic);
+
+    // Fireworks after 15s
+    setTimeout(startFireworksShow, 15000);
 }
 
-// Play on first tap/click
-document.addEventListener("click", startMusic);
+// Preload
+document.addEventListener("DOMContentLoaded", () => {
+    music.play().catch(()=>{});
+});
+
+// Start on tap
+document.addEventListener("click", playMusic);
+document.addEventListener("touchstart", playMusic);
 
 
-/* 🎉 Confetti Generator */
+
+/* CONFETTI */
 function createConfetti(){
+
     const confetti = document.createElement("div");
     confetti.classList.add("confetti");
 
-    confetti.style.left = Math.random() * window.innerWidth + "px";
-    confetti.style.animationDuration = (Math.random() * 3 + 2) + "s";
+    confetti.style.left = Math.random()*window.innerWidth + "px";
+    confetti.style.animationDuration =
+        (Math.random()*3 + 2) + "s";
 
     document.body.appendChild(confetti);
 
-    setTimeout(() => {
+    setTimeout(()=>{
         confetti.remove();
-    }, 5000);
+    },5000);
 }
 
-setInterval(createConfetti, 200);
+setInterval(createConfetti,200);
+
+
+
+/* FIREWORKS */
+
+function createFirework(x,y){
+
+    const colors = [
+        "#ff4d6d",
+        "#ff9ff3",
+        "#feca57",
+        "#48dbfb",
+        "#1dd1a1",
+        "#ffffff"
+    ];
+
+    for(let i=0;i<40;i++){
+
+        const spark = document.createElement("div");
+        spark.classList.add("firework");
+
+        const angle = Math.random()*2*Math.PI;
+        const dist = Math.random()*200 + 50;
+
+        const dx = Math.cos(angle)*dist + "px";
+        const dy = Math.sin(angle)*dist + "px";
+
+        spark.style.left = x + "px";
+        spark.style.top = y + "px";
+
+        spark.style.background =
+            colors[Math.floor(Math.random()*colors.length)];
+
+        spark.style.setProperty("--x",dx);
+        spark.style.setProperty("--y",dy);
+
+        document.body.appendChild(spark);
+
+        setTimeout(()=>{
+            spark.remove();
+        },1500);
+    }
+}
+
+function launchFirework(){
+
+    const x = Math.random()*window.innerWidth;
+    const y = Math.random()*(window.innerHeight/2);
+
+    createFirework(x,y);
+}
+
+function startFireworksShow(){
+
+    let count = 0;
+
+    const show = setInterval(()=>{
+
+        launchFirework();
+        count++;
+
+        if(count > 25){
+            clearInterval(show);
+            showLoveMessage();
+        }
+
+    },400);
+}
+
+
+
+/* FINAL MESSAGE */
+
+function showLoveMessage(){
+
+    const msg = document.createElement("div");
+
+    msg.innerHTML = "I Love You Forever 💖";
+
+    msg.style.position="fixed";
+    msg.style.top="50%";
+    msg.style.left="50%";
+    msg.style.transform="translate(-50%,-50%)";
+
+    msg.style.fontSize="45px";
+    msg.style.color="hotpink";
+    msg.style.fontWeight="bold";
+    msg.style.textShadow="0 0 20px pink";
+
+    msg.style.zIndex="20";
+    msg.style.animation="pulse 1.5s infinite";
+
+    document.body.appendChild(msg);
+}
 
 </script>
 
