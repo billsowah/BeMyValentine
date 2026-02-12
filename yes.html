@@ -12,7 +12,7 @@
 body{
     margin:0;
     height:100vh;
-    background:#D8BFD8; /* Lilac */
+    background:#D8BFD8;
     display:flex;
     flex-direction:column;
     justify-content:center;
@@ -80,24 +80,20 @@ h1{
     100%{transform:scale(1);opacity:1;}
 }
 
-/* Small Music Hint */
+/* ✅ STABLE Music Hint */
 #musicHint{
-    position:fixed;
+    position:fixed;              /* Locks to screen */
     bottom:12px;
+    left:50%;                    /* Center */
+    transform:translateX(-50%);  /* Perfect centering */
     font-size:12px;
     font-family:Arial, sans-serif;
     color:#1e90ff;
     opacity:0.85;
-    z-index:4;
+    z-index:100;
     display:flex;
     gap:4px;
-    animation:hintFloat 2s infinite;
-}
-
-@keyframes hintFloat{
-    0%{transform:translateY(0);}
-    50%{transform:translateY(-4px);}
-    100%{transform:translateY(0);}
+    pointer-events:none;         /* Prevents shifting on tap */
 }
 
 /* Fireworks */
@@ -136,7 +132,7 @@ h1{
 
 <div id="tapMessage">👉 Tap anywhere to start music 💕</div>
 
-<!-- Small Music Hint -->
+<!-- Stable Music Hint -->
 <div id="musicHint">
     ↓ tap here to play music
 </div>
@@ -193,7 +189,6 @@ function playMusic(){
     document.removeEventListener("click", playMusic);
     document.removeEventListener("touchstart", playMusic);
 
-    // Fireworks after 15s
     setTimeout(startFireworksShow, 15000);
 }
 
