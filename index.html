@@ -4,10 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Valentine</title>
+<title>Be My Valentine</title>
 
 <style>
 
+/* Page */
 body{
     margin:0;
     height:100vh;
@@ -19,7 +20,7 @@ body{
     overflow:hidden;
 }
 
-/* Card Entrance Animation */
+/* Card */
 .container{
     background:red;
     width:360px;
@@ -30,13 +31,13 @@ body{
     position:relative;
     z-index:2;
 
-    /* Animation */
     animation:cardEnter 1.2s ease-out;
 }
 
+/* Entrance */
 @keyframes cardEnter{
     from{
-        transform:translateY(50px) scale(0.8);
+        transform:translateY(60px) scale(0.8);
         opacity:0;
     }
     to{
@@ -49,7 +50,6 @@ body{
 .cat{
     font-size:50px;
     margin-bottom:15px;
-
     animation:bounce 2s infinite;
 }
 
@@ -64,13 +64,42 @@ h2{
     font-weight:bold;
     color:white;
     margin-bottom:35px;
-
     animation:fadeIn 2s ease;
 }
 
+/* Fade */
 @keyframes fadeIn{
     from{opacity:0;}
     to{opacity:1;}
+}
+
+/* Glowing Name */
+.glow{
+    color:white;
+    font-weight:bold;
+    text-shadow:
+        0 0 5px hotpink,
+        0 0 10px hotpink,
+        0 0 20px pink,
+        0 0 40px pink;
+
+    animation:glowPulse 2s infinite alternate;
+}
+
+@keyframes glowPulse{
+    from{
+        text-shadow:
+        0 0 5px hotpink,
+        0 0 10px hotpink,
+        0 0 20px pink;
+    }
+    to{
+        text-shadow:
+        0 0 10px hotpink,
+        0 0 20px hotpink,
+        0 0 40px pink,
+        0 0 60px pink;
+    }
 }
 
 /* Buttons Area */
@@ -86,7 +115,7 @@ button{
     cursor:pointer;
 }
 
-/* YES Button (Pulse) */
+/* YES Button */
 #yes{
     background:white;
     color:red;
@@ -145,7 +174,10 @@ button{
 
     <div class="cat">🐱❤️</div>
 
-    <h2>Cherubina will you be my valentine?</h2>
+    <h2>
+        <span class="glow">Cherubina</span>
+        will you be my valentine?
+    </h2>
 
     <div class="buttons" id="area">
 
@@ -163,7 +195,7 @@ button{
 
 <script>
 
-/* Floating Hearts On Load */
+/* Hearts On Load */
 window.onload = function(){
     for(let i=0;i<15;i++){
         setTimeout(createHeart, i*300);
@@ -190,7 +222,7 @@ function createHeart(){
 }
 
 
-/* NO Button Runs */
+/* NO Button Run */
 function moveNo(){
 
     const noBtn = document.getElementById("no");
@@ -210,7 +242,7 @@ function moveNo(){
 /* YES Effects */
 function goYes(){
 
-    // Sound
+    // Play Sound
     document.getElementById("yesSound").play();
 
     // Vibrate
@@ -218,12 +250,12 @@ function goYes(){
         navigator.vibrate([200,100,200]);
     }
 
-    // Hearts
+    // Hearts Burst
     for(let i=0;i<25;i++){
         createHeart();
     }
 
-    // Go to yes page
+    // Go to YES page
     setTimeout(()=>{
         window.location.href="yes.html";
     },1500);
