@@ -6,22 +6,23 @@
 <title>Be My Valentine</title>
 
 <style>
-/* Gradient Background Animation */
+/* Main page baby-pink gradient background */
 body{
     margin:0;
     height:100vh;
     display:flex;
     justify-content:center;
     align-items:center;
-    background: linear-gradient(120deg, #ffccdd, #ffddee, #ffe0f0, #ffe6f5);
-    background-size: 400% 400%;
-    animation: gradientMove 15s ease infinite;
     font-family:Arial, sans-serif;
     overflow:hidden;
-    cursor:none; /* for heart cursor trail */
+    cursor:none;
+
+    background: linear-gradient(120deg, #ffe0eb, #ffd1e6, #ffcce0, #ffe6f2);
+    background-size: 400% 400%;
+    animation: babyPinkGradient 15s ease infinite;
 }
 
-@keyframes gradientMove{
+@keyframes babyPinkGradient{
     0%{background-position:0% 50%;}
     50%{background-position:100% 50%;}
     100%{background-position:0% 50%;}
