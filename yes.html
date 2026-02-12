@@ -80,6 +80,26 @@ h1{
     100%{transform:scale(1);opacity:1;}
 }
 
+/* Small Music Hint */
+#musicHint{
+    position:fixed;
+    bottom:12px;
+    font-size:12px;
+    font-family:Arial, sans-serif;
+    color:#1e90ff;
+    opacity:0.85;
+    z-index:4;
+    display:flex;
+    gap:4px;
+    animation:hintFloat 2s infinite;
+}
+
+@keyframes hintFloat{
+    0%{transform:translateY(0);}
+    50%{transform:translateY(-4px);}
+    100%{transform:translateY(0);}
+}
+
 /* Fireworks */
 .firework{
     position:absolute;
@@ -116,6 +136,11 @@ h1{
 
 <div id="tapMessage">👉 Tap anywhere to start music 💕</div>
 
+<!-- Small Music Hint -->
+<div id="musicHint">
+    ↓ tap here to play music
+</div>
+
 
 <script>
 
@@ -147,6 +172,7 @@ setInterval(() => {
 /* MUSIC SYSTEM */
 const music = document.getElementById("yesMusic");
 const tapMsg = document.getElementById("tapMessage");
+const musicHint = document.getElementById("musicHint");
 
 music.volume = 1;
 music.muted = true;
@@ -162,6 +188,7 @@ function playMusic(){
     music.play().catch(()=>{});
 
     tapMsg.style.display = "none";
+    musicHint.style.display = "none";
 
     document.removeEventListener("click", playMusic);
     document.removeEventListener("touchstart", playMusic);
@@ -266,6 +293,30 @@ function startFireworksShow(){
         }
 
     },400);
+}
+
+
+/* FINAL MESSAGE */
+function showLoveMessage(){
+
+    const msg = document.createElement("div");
+
+    msg.innerHTML = "I Love You Forever 💖";
+
+    msg.style.position="fixed";
+    msg.style.top="50%";
+    msg.style.left="50%";
+    msg.style.transform="translate(-50%,-50%)";
+
+    msg.style.fontSize="45px";
+    msg.style.color="hotpink";
+    msg.style.fontWeight="bold";
+    msg.style.textShadow="0 0 20px pink";
+
+    msg.style.zIndex="20";
+    msg.style.animation="pulse 1.5s infinite";
+
+    document.body.appendChild(msg);
 }
 
 </script>
