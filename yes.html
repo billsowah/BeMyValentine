@@ -68,7 +68,7 @@ h1{
 <body>
 
 <!-- Music -->
-<audio id="yesMusic" src="WhereHaveYouBeen?.m4a" loop></audio>
+<audio id="yesMusic" src="MaCherie1.m4a" loop></audio>
 
 <h1>YAAYY! 💕</h1>
 
@@ -116,13 +116,13 @@ setInterval(createConfetti, 200);
 
 /* Play music on page load with autoplay fallback */
 window.onload = function(){
-    const audio = document.getElementBysrc("WhereHaveYouBeen?.m4a");
+    const audio = document.getElementById("yesMusic");
     audio.play().catch(()=>{console.log("Autoplay blocked, click to play.")});
 };
 
 /* Fallback for blocked autoplay: click anywhere to start */
 document.body.addEventListener("click", () => {
-    const audio = document.getElementBysrc("WhereHaveYouBeen?.m4a");
+    const audio = document.getElementById("yesMusic.m4a");
     if(audio.paused) audio.play();
 }, {once:true});
 
