@@ -185,7 +185,7 @@ button{
 <body>
 
 <!-- Audio -->
-<audio id="BeMyValentine" src="MaCherie.m4a" loop></audio>
+<audio id="BeMyValentine" src="MaCherie1.m4a" loop></audio>
 <audio id="confettiSound" src="confetti-sound.mp3"></audio>
 
 <div class="container">
@@ -204,7 +204,7 @@ button{
 window.onload = function(){
     setTimeout(() => {
         const audio = document.getElementById("BeMyValentine");
-        audio.play().catch(()=>{console.log("Autoplay blocked.")});
+        audio.play().catch(()=>{console.log("Autoplay")});
     }, 3000);
 };
 
