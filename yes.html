@@ -67,12 +67,12 @@ h1{
 
 <body>
 
-<!-- Music Placeholder -->
-<audio id="yesMusic" src="WhereHaveYouBeen.m4a" loop autoplay></audio>
+<!-- Music -->
+<audio id="yesMusic" src="WhereHaveYouBeen.m4a" loop></audio>
 
 <h1>YAAYY! 💕</h1>
 
-<img id="slideshow" src="img1.jpg">
+<img id="slideshow" src="IMG_3828.jpeg">
 
 <script>
 
@@ -113,6 +113,18 @@ function createConfetti(){
 }
 
 setInterval(createConfetti, 200);
+
+/* Play music on page load with autoplay fallback */
+window.onload = function(){
+    const audio = document.getElementById("yesMusic");
+    audio.play().catch(()=>{console.log("Autoplay blocked, click to play.")});
+};
+
+/* Fallback for blocked autoplay: click anywhere to start */
+document.body.addEventListener("click", () => {
+    const audio = document.getElementById("yesMusic");
+    if(audio.paused) audio.play();
+}, {once:true});
 
 </script>
 
