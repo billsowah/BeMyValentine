@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>YAAYY</title>
+
+<style>
+
+body{
+    margin:0;
+    height:100vh;
+    background:white;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    font-family:Arial, sans-serif;
+    overflow:hidden;
+}
+
+/* YAAYY Text */
+h1{
+    color:hotpink;
+    font-size:50px;
+    margin-bottom:20px;
+    font-weight:bold;
+}
+
+/* Image Area */
+#slideshow{
+    width:250px;
+    height:250px;
+    border-radius:15px;
+    object-fit:cover;
+    box-shadow:0 0 15px pink;
+}
+
+/* Confetti */
+.confetti{
+    position:absolute;
+    width:10px;
+    height:10px;
+    background:pink;
+    animation:fall linear infinite;
+}
+
+@keyframes fall{
+    from{
+        transform:translateY(-100px) rotate(0deg);
+    }
+    to{
+        transform:translateY(100vh) rotate(360deg);
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>YAAYY! 💕</h1>
+
+<img id="slideshow" src="img1.jpg">
+
+<script>
+
+/* 🔁 CHANGE THESE TO YOUR IMAGE NAMES */
+const images = [
+    "img1.jpg",
+    "img2.jpg",
+    "img3.jpg"
+];
+
+let index = 0;
+const slide = document.getElementById("slideshow");
+
+setInterval(() => {
+    index = (index + 1) % images.length;
+    slide.src = images[index];
+}, 2500);
+
+
+/* Confetti Generator */
+function createConfetti(){
+
+    const confetti = document.createElement("div");
+    confetti.classList.add("confetti");
+
+    confetti.style.left = Math.random() * window.innerWidth + "px";
+    confetti.style.animationDuration = (Math.random() * 3 + 2) + "s";
+
+    document.body.appendChild(confetti);
+
+    setTimeout(() => {
+        confetti.remove();
+    }, 5000);
+}
+
+setInterval(createConfetti, 200);
+
+</script>
+
+</body>
+</html>
