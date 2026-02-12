@@ -27,7 +27,7 @@ body{
     50%{background-position:100% 50%;}
     100%{background-position:0% 50%;}
 }
-    
+
 /* Card with hot-pink gradient */
 .container{
     width:360px;
@@ -40,6 +40,11 @@ body{
     animation:cardEnter 1.2s ease-out, cardGradient 8s ease infinite;
     background: linear-gradient(135deg, #ff69b4, #ff85c1, #ff5f9f, #ff99c8);
     background-size: 400% 400%;
+}
+
+@keyframes cardEnter{
+    from{transform:translateY(60px) scale(0.8); opacity:0;}
+    to{transform:translateY(0) scale(1); opacity:1;}
 }
 
 @keyframes cardGradient{
@@ -92,12 +97,8 @@ h2{
     animation:glowPulse 2s infinite alternate, nameFloat 2s infinite alternate;
 }
 @keyframes glowPulse{
-    from{
-        text-shadow:0 0 5px hotpink,0 0 10px hotpink,0 0 20px pink;
-    }
-    to{
-        text-shadow:0 0 10px hotpink,0 0 20px hotpink,0 0 40px pink,0 0 60px pink;
-    }
+    from{text-shadow:0 0 5px hotpink,0 0 10px hotpink,0 0 20px pink;}
+    to{text-shadow:0 0 10px hotpink,0 0 20px hotpink,0 0 40px pink,0 0 60px pink;}
 }
 @keyframes nameFloat{
     0%{transform:translateY(0);}
@@ -157,7 +158,7 @@ button{
     100%{transform:translateY(-120vh);}
 }
 
-/* Sparkles */
+/* Floating Sparkles */
 .sparkle{
     position:absolute;
     width:8px;
@@ -177,37 +178,16 @@ button{
     0%{transform:translateY(0);}
     100%{transform:translateY(-120vh);}
 }
-    /* Floating Sparkles */
-.sparkle{
-    position:absolute;
-    width:8px;
-    height:8px;
-    background:white;
-    border-radius:50%;
-    opacity:1;
-    box-shadow: 0 0 10px white, 0 0 20px pink;
-    animation: sparkleFloat 7s linear infinite, sparkleTwinkle 1.5s infinite alternate;
-}
 
-@keyframes sparkleTwinkle{
-    0%{transform:scale(0.5);}
-    50%{transform:scale(1);}
-    100%{transform:scale(0.5);}
-}
-
-@keyframes sparkleFloat{
-    0%{transform:translateY(0);}
-    100%{transform:translateY(-120vh);}
-}
 </style>
 </head>
 
 <body>
 
 <!-- Audio -->
-<audio id="Be My Valentine" src="MaCherie.m4a" loop></audio>
+<audio id="BeMyValentine" src="MaCherie.m4a" loop></audio>
 <audio id="confettiSound" src="confetti-sound.mp3"></audio>
-    
+
 <div class="container">
     <div class="cat">🐱❤️</div>
     <h2>
@@ -220,15 +200,17 @@ button{
 </div>
 
 <script>
-/* Play music on load */
+/* Play music 3 seconds after page load */
 window.onload = function(){
-    const audio = document.getElementById("Be My Valentine");
-    audio.play().catch(()=>{console.log("Autoplay blocked.")});
+    setTimeout(() => {
+        const audio = document.getElementById("BeMyValentine");
+        audio.play().catch(()=>{console.log("Autoplay blocked.")});
+    }, 3000);
 };
 
 /* Fallback for autoplay */
 document.body.addEventListener("click", () => {
-    const audio = document.getElementById("Be My Valentine");
+    const audio = document.getElementById("BeMyValentine");
     if(audio.paused) audio.play();
 }, {once:true});
 
