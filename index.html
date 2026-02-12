@@ -6,6 +6,7 @@
 <title>Be My Valentine</title>
 
 <style>
+
 /* Main page baby-pink gradient background */
 body{
     margin:0;
@@ -28,7 +29,7 @@ body{
     100%{background-position:0% 50%;}
 }
 
-/* Card with hot-pink gradient */
+/* Card */
 .container{
     width:360px;
     padding:35px 20px;
@@ -53,11 +54,10 @@ body{
     100%{background-position:0% 50%;}
 }
 
-/* Cat Emoji */
+/* Cat */
 .cat{
     font-size:50px;
     margin-bottom:15px;
-    display:inline-block;
     animation:catBounce 2s infinite, catTilt 4s infinite alternate;
 }
 
@@ -65,6 +65,7 @@ body{
     0%,100%{transform:translateY(0);}
     50%{transform:translateY(-10px);}
 }
+
 @keyframes catTilt{
     0%{transform:rotate(0deg);}
     50%{transform:rotate(5deg);}
@@ -77,14 +78,9 @@ h2{
     font-weight:bold;
     color:white;
     margin-bottom:35px;
-    animation:fadeIn 2s ease;
-}
-@keyframes fadeIn{
-    from{opacity:0;}
-    to{opacity:1;}
 }
 
-/* Glowing Name */
+/* Glow Name */
 .glow{
     color:white;
     font-weight:bold;
@@ -93,33 +89,33 @@ h2{
         0 0 10px hotpink,
         0 0 20px pink,
         0 0 40px pink;
-    display:inline-block;
     animation:glowPulse 2s infinite alternate, nameFloat 2s infinite alternate;
 }
+
 @keyframes glowPulse{
-    from{text-shadow:0 0 5px hotpink,0 0 10px hotpink,0 0 20px pink;}
-    to{text-shadow:0 0 10px hotpink,0 0 20px hotpink,0 0 40px pink,0 0 60px pink;}
+    from{text-shadow:0 0 5px hotpink,0 0 10px hotpink;}
+    to{text-shadow:0 0 20px hotpink,0 0 60px pink;}
 }
+
 @keyframes nameFloat{
     0%{transform:translateY(0);}
     50%{transform:translateY(-5px);}
     100%{transform:translateY(0);}
 }
 
-/* Buttons Area */
+/* Buttons */
 .buttons{
     position:relative;
     height:140px;
 }
 
-/* Buttons */
 button{
     border:none;
     border-radius:40px;
     cursor:pointer;
 }
 
-/* YES Button */
+/* YES */
 #yes{
     background:white;
     color:red;
@@ -129,13 +125,14 @@ button{
     border:3px solid red;
     animation:pulse 1.5s infinite;
 }
+
 @keyframes pulse{
     0%{transform:scale(1);}
     50%{transform:scale(1.08);}
     100%{transform:scale(1);}
 }
 
-/* NO Button */
+/* NO */
 #no{
     background:white;
     color:red;
@@ -143,40 +140,61 @@ button{
     padding:6px 14px;
     position:absolute;
     border:1px solid red;
-    transition: left 0.3s ease, top 0.3s ease;
 }
 
-/* Floating Hearts */
+/* Hearts */
 .heart{
     position:absolute;
     color:red;
     font-size:18px;
     animation:floatUp 5s linear infinite;
 }
+
 @keyframes floatUp{
     0%{transform:translateY(0);}
     100%{transform:translateY(-120vh);}
 }
 
-/* Floating Sparkles */
+/* Sparkles */
 .sparkle{
     position:absolute;
     width:8px;
     height:8px;
     background:white;
     border-radius:50%;
-    opacity:1;
     box-shadow: 0 0 10px white, 0 0 20px pink;
     animation:sparkleFloat 7s linear infinite, sparkleTwinkle 1.5s infinite alternate;
 }
+
 @keyframes sparkleTwinkle{
     0%{transform:scale(0.5);}
     50%{transform:scale(1);}
     100%{transform:scale(0.5);}
 }
+
 @keyframes sparkleFloat{
     0%{transform:translateY(0);}
     100%{transform:translateY(-120vh);}
+}
+
+/* Music Hint */
+#musicHint{
+    position:fixed;
+    bottom:12px;
+    font-size:12px;
+    font-family:Arial, sans-serif;
+    color:#1e90ff;
+    opacity:0.85;
+    z-index:3;
+    display:flex;
+    gap:4px;
+    animation:hintFloat 2s infinite;
+}
+
+@keyframes hintFloat{
+    0%{transform:translateY(0);}
+    50%{transform:translateY(-4px);}
+    100%{transform:translateY(0);}
 }
 
 </style>
@@ -188,89 +206,163 @@ button{
 <audio id="BeMyValentine" src="MaCherie1.m4a" loop></audio>
 <audio id="confettiSound" src="confetti-sound.mp3"></audio>
 
+
 <div class="container">
+
     <div class="cat">🐱❤️</div>
+
     <h2>
         <span class="glow">Dear Cherubina,</span> will you be my valentine?
     </h2>
+
     <div class="buttons" id="area">
         <button id="yes" onclick="goYes()">Yes</button>
         <button id="no" onmouseover="moveNo()" onclick="goNo()">No</button>
     </div>
+
 </div>
 
-<script>
-/* Play music 3 seconds after page load */
-window.onload = function(){
-    setTimeout(() => {
-        const audio = document.getElementById("BeMyValentine");
-        audio.play().catch(()=>{console.log("Autoplay blocked.")});
-    }, 3000);
-};
 
-/* Fallback for autoplay */
-document.body.addEventListener("click", () => {
-    const audio = document.getElementById("BeMyValentine");
-    if(audio.paused) audio.play();
-}, {once:true});
+<!-- Music Hint -->
+<div id="musicHint">
+    ↓ tap here to play music
+</div>
+
+
+<script>
+
+/* MUSIC SYSTEM */
+const audio = document.getElementById("BeMyValentine");
+const musicHint = document.getElementById("musicHint");
+
+audio.volume = 1;
+audio.muted = true;
+
+let musicStarted = false;
+
+function startMusic(){
+
+    if(musicStarted) return;
+    musicStarted = true;
+
+    audio.muted = false;
+
+    audio.play().catch(()=>{
+        console.log("Autoplay blocked");
+    });
+
+    musicHint.style.display = "none";
+
+    document.body.removeEventListener("click", startMusic);
+    document.body.removeEventListener("touchstart", startMusic);
+}
+
+/* Try preload */
+window.addEventListener("load", () => {
+    audio.play().catch(()=>{});
+});
+
+/* Start on first tap */
+document.body.addEventListener("click", startMusic);
+document.body.addEventListener("touchstart", startMusic);
+
+
 
 /* Cursor Heart Trail */
 document.addEventListener("mousemove", e=>{
+
     const heart = document.createElement("div");
     heart.classList.add("heart");
+
+    heart.innerHTML = "❤️";
+
     heart.style.left = e.clientX+"px";
     heart.style.top = e.clientY+"px";
     heart.style.fontSize = "10px";
+
     document.body.appendChild(heart);
+
+    setTimeout(()=>{
+        heart.remove();
+    },5000);
 });
 
-/* Create Floating Hearts continuously */
+
+/* Floating Hearts */
 function createHeart(){
+
     const heart = document.createElement("div");
     heart.classList.add("heart");
+
     heart.innerHTML = "❤️";
+
     heart.style.left = Math.random()*100 + "vw";
     heart.style.bottom = "0px";
     heart.style.fontSize = (Math.random()*20+15)+"px";
+
     document.body.appendChild(heart);
 }
 
-/* Create Floating Sparkles continuously */
+
+/* Floating Sparkles */
 function createSparkle(){
+
     const sparkle = document.createElement("div");
     sparkle.classList.add("sparkle");
+
     sparkle.style.left = Math.random()*100 + "vw";
     sparkle.style.bottom = "0px";
-    sparkle.style.fontSize = (Math.random()*5+5)+"px";
+
     document.body.appendChild(sparkle);
 }
 
-/* Continuously spawn hearts and sparkles */
-setInterval(createHeart, 300);      // new heart every 0.3s
-setInterval(createSparkle, 200);    // new sparkle every 0.2s
+
+/* Spawn Effects */
+setInterval(createHeart,300);
+setInterval(createSparkle,200);
+
 
 /* NO Button Moves */
 function moveNo(){
+
     const noBtn = document.getElementById("no");
+
     const maxX = window.innerWidth - noBtn.offsetWidth;
     const maxY = window.innerHeight - noBtn.offsetHeight;
-    const x = Math.random() * maxX;
-    const y = Math.random() * maxY;
+
+    const x = Math.random()*maxX;
+    const y = Math.random()*maxY;
+
     noBtn.style.position = "fixed";
-    noBtn.style.left = x + "px";
-    noBtn.style.top = y + "px";
+    noBtn.style.left = x+"px";
+    noBtn.style.top = y+"px";
 }
+
 
 /* YES Button */
 function goYes(){
-    for(let i=0;i<50;i++){createHeart();}
+
+    for(let i=0;i<50;i++){
+        createHeart();
+    }
+
     document.getElementById("confettiSound").play();
-    if(navigator.vibrate){navigator.vibrate([200,100,200]);}
-    setTimeout(()=>{window.location.href="yes.html";},1500);
+
+    if(navigator.vibrate){
+        navigator.vibrate([200,100,200]);
+    }
+
+    setTimeout(()=>{
+        window.location.href="yes.html";
+    },1500);
 }
 
-/* NO Page */
-function goNo(){window.location.href="no.html";}
+
+/* NO Button */
+function goNo(){
+    window.location.href="no.html";
+}
+
 </script>
 
 </body>
