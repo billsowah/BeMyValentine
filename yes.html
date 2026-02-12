@@ -68,8 +68,24 @@ h1{
 <body>
 
 <!-- Music -->
-<audio id="YesMusic" src="WhereHaveYouBeen?.m4a" loop></audio>
+<audio id="YAAYY" src="WhereHaveYouBeen?.m4a" loop></audio>
+<audio id="confettiSound" src="confetti-sound.mp3"></audio>
 
+<script>
+/* Play music 3 seconds after page load */
+window.onload = function(){
+    setTimeout(() => {
+        const audio = document.getElementById("YAAYY");
+        audio.play().catch(()=>{console.log("Autoplay")});
+    }, 3000);
+};
+
+/* Fallback for autoplay */
+document.body.addEventListener("click", () => {
+    const audio = document.getElementById("YAAYY");
+    if(audio.paused) audio.play();
+}, {once:true});
+    
 <h1>YAAYY! 💕</h1>
 
 <img id="slideshow" src="IMG_3828.jpeg">
