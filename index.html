@@ -205,8 +205,7 @@ button{
 <body>
 
 <!-- Audio -->
-<audio id="yesSound" src="freesound_community-ghua-4-63311.mp3" loop></audio>
-<audio id="confettiSound" src="confetti-sound.mp3"></audio>
+<audio id="index.html" src="MaCherie.m4a" loop></audio>
 
 <div class="container">
     <div class="cat">🐱❤️</div>
@@ -222,13 +221,13 @@ button{
 <script>
 /* Play music on load */
 window.onload = function(){
-    const audio = document.getElementById("yesSound");
-    audio.play().catch(()=>{console.log("Autoplay blocked.")});
+    const audio = document.getElementById("index.html");
+    audio.play().catch(()=>{console.log("Autoplay")});
 };
 
 /* Fallback for autoplay */
 document.body.addEventListener("click", () => {
-    const audio = document.getElementById("yesSound");
+    const audio = document.getElementById("index.html");
     if(audio.paused) audio.play();
 }, {once:true});
 
