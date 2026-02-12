@@ -48,7 +48,7 @@ h1{
     position:absolute;
     width:10px;
     height:10px;
-    background:pink;
+    background:red;
     animation:fall linear infinite;
     z-index:1;
 }
@@ -116,13 +116,13 @@ setInterval(createConfetti, 200);
 
 /* Play music on page load with autoplay fallback */
 window.onload = function(){
-    const audio = document.getElementById("yesMusic");
+    const audio = document.getElementBysrc("WhereHaveYouBeen?.m4a");
     audio.play().catch(()=>{console.log("Autoplay blocked, click to play.")});
 };
 
 /* Fallback for blocked autoplay: click anywhere to start */
 document.body.addEventListener("click", () => {
-    const audio = document.getElementById("yesMusic");
+    const audio = document.getElementBysrc("WhereHaveYouBeen?.m4a");
     if(audio.paused) audio.play();
 }, {once:true});
 
