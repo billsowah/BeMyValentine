@@ -3,11 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Be My Valentine</title>
 
 <style>
-
 /* Page */
 body{
     margin:0;
@@ -161,15 +159,13 @@ button{
         opacity:0;
     }
 }
-
 </style>
 </head>
 
 <body>
 
 <!-- Sound -->
-<audio id="yesSound" src="freesound_community-ghua-4-
-63311.mp3"></audio>
+<audio id="yesSound" src="freesound_community-ghua-4-63311.mp3"></audio>
 
 <div class="container">
 
@@ -195,18 +191,28 @@ button{
 </div>
 
 <script>
-
-/* Hearts On Load */
+/* Hearts On Load & Play Music */
 window.onload = function(){
+    const audio = document.getElementById("yesSound");
+    audio.play().catch(() => {
+        // Autoplay blocked: will play on first click
+        console.log("Autoplay blocked, will play on first interaction.");
+    });
+
+    // Create floating hearts
     for(let i=0;i<15;i++){
         setTimeout(createHeart, i*300);
     }
 };
 
+// Fallback for autoplay-blocking browsers
+document.body.addEventListener("click", () => {
+    const audio = document.getElementById("yesSound");
+    if(audio.paused) audio.play();
+}, { once: true });
 
 /* Create Heart */
 function createHeart(){
-
     const heart = document.createElement("div");
     heart.classList.add("heart");
     heart.innerHTML = "❤️";
@@ -222,10 +228,8 @@ function createHeart(){
     },5000);
 }
 
-
 /* NO Button Run */
 function moveNo(){
-
     const noBtn = document.getElementById("no");
     const area = document.getElementById("area");
 
@@ -239,11 +243,9 @@ function moveNo(){
     noBtn.style.top = y + "px";
 }
 
-
 /* YES Effects */
 function goYes(){
-
-    // Play Sound
+    // Play Sound (in case fallback was needed)
     document.getElementById("yesSound").play();
 
     // Vibrate
@@ -262,12 +264,10 @@ function goYes(){
     },1500);
 }
 
-
 /* NO Page */
 function goNo(){
     window.location.href="no.html";
 }
-
 </script>
 
 </body>
